@@ -4,10 +4,12 @@ import * as THREE from "three";
 import WaterTanks from "../shaders/water";
 
 interface IModelProps {
-  waterLevel: number[]
+  waterLevel: number[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onPointerDown : (e : any) => void
 }
 
-const Model = ({ waterLevel } : IModelProps) => {
+const Model = ({ waterLevel, onPointerDown } : IModelProps) => {
   const modelPath = "/assets/diagrama_tanque.glb";
   const gltf = useGLTF(modelPath);
   const scene = useMemo(() => gltf.scene.clone(), [gltf.scene]);
@@ -19,10 +21,10 @@ const Model = ({ waterLevel } : IModelProps) => {
         if (mesh.material) {
           mesh.material = new THREE.MeshPhysicalMaterial({
             transparent: true,
-            opacity: 0.5,
-            transmission: 0,
-            roughness: 1,
-            metalness: 0,
+            opacity: 0.8,
+            transmission: 1,
+            roughness: 0.8,
+            metalness: 1,
             depthWrite: false,
           });
         }
@@ -32,7 +34,7 @@ const Model = ({ waterLevel } : IModelProps) => {
 
   return (
     <group>
-      <primitive object={scene} scale={0.7} />
+      <primitive object={scene} scale={0.7} onPointerDown={onPointerDown}/>
       <WaterTanks waterLevels={waterLevel} />
     </group>
   );

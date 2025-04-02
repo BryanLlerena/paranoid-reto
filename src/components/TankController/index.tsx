@@ -56,33 +56,12 @@ const TankController = ({ currentLevels, setTankWaterLevel, tankNumber, title } 
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[currentLevels[tankNumber-1]])
 
-    // useEffect(() => {
-    //   if(tankNumber > 1){
-    //     if(currentLevels[tankNumber-2] > 0){
-    //       const levels = currentLevels
-    //       levels[tankNumber-1] = waterLevel
-    //       levels[tankNumber-2] = levels[tankNumber-2] - 1
-    //       setTankWaterLevel([...levels])
-    //     }
-    //   } else {
-    //     const levels = currentLevels
-    //     levels[tankNumber-1] = waterLevel
-    //     setTankWaterLevel([...levels])
-    //   }
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [waterLevel])
-
-    // useEffect(() => {
-    //   if(currentLevels[tankNumber-1] === waterLevel){
-    //     setWaterLevel(currentLevels[tankNumber-1])
-    //   }
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[currentLevels[tankNumber-1]])
-
   return(
     <div className="tank-controller--container">
       <h4>{title}</h4>
-      <div>
+      <div className="tank-controller--water-level">
+        <h5>Nivel de agua:</h5>
+        <div>
         <input
             type="range"
             min="0"
@@ -91,16 +70,17 @@ const TankController = ({ currentLevels, setTankWaterLevel, tankNumber, title } 
             value={waterLevel}
             onChange={(e) => onSlideChange(parseFloat(e.target.value))}
         />
-        <span> Nivel de agua: {waterLevel}% </span>
+        <span> {waterLevel}% </span>
+        </div>
       </div>
 
       <h4>Bomba #{tankNumber}</h4>
       <div className="tank-controller-buttons--container">
-        <button className="primary-button button-power" title="apagado de la bomba" onClick={() => console.log("click")}>
+        {/* <button className="primary-button button-power" title="apagado de la bomba" onClick={() => console.log("click")}>
           <FaPowerOff color="#FFFFFF" size={30}/>
-        </button>
+        </button> */}
         <button className="primary-button button-power" title="llenar" onClick={() => onWaterRefill()}>
-          <FaWater color="#FFFFFF" size={30}/>
+          <FaPowerOff color="#000000" size={20}/> Activar
         </button>
       </div>
     </div>

@@ -3,3 +3,13 @@
   flex-direction: column;
   gap: 10px;
 }
+.tooltip--container {
+  display: flex;
+  flex-direction: column;
+  background: #141414;
+  background: "white";
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: #FFFFFF;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

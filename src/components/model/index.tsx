@@ -1,11 +1,17 @@
-import React, { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import Water from "../shaders/water";
+import WaterTanks from "../shaders/water";
 
-const Model: React.FC<{ url: string; waterLevel: number }> = ({ url, waterLevel }) => {
-  const { scene } = useGLTF(url);
-  
+interface IModelProps {
+  waterLevel: number[]
+}
+
+const Model = ({ waterLevel } : IModelProps) => {
+  const modelPath = "/assets/diagrama_tanque.glb";
+  const gltf = useGLTF(modelPath);
+  const scene = useMemo(() => gltf.scene.clone(), [gltf.scene]);
+
   useEffect(() => {
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
@@ -26,10 +32,12 @@ const Model: React.FC<{ url: string; waterLevel: number }> = ({ url, waterLevel 
 
   return (
     <group>
-      <primitive object={scene} scale={1.5} />
-      <Water waterLevel={waterLevel} />
+      <primitive object={scene} scale={0.7} />
+      <WaterTanks waterLevels={waterLevel} />
     </group>
   );
 };
 
-export default Model
+useGLTF.preload("/assets/diagrama_tanque.glb");
+
+export default Model;
